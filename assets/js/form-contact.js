@@ -1,4 +1,35 @@
 $(document).ready(function () {
+	function ensureMailLoader($form) {
+		var $wrap = $form.closest(".contact");
+		if (!$wrap.length) {
+			$wrap = $form.parent();
+		}
+		if (!$wrap.find(".mail-loader").length) {
+			$wrap.append(
+				'<div class="mail-loader" id="loader" aria-live="polite" aria-busy="false">' +
+					'<div class="mail-loader-box">' +
+						'<div class="mail-spinner"></div>' +
+						"<p>Sending your message...</p>" +
+					"</div>" +
+				"</div>"
+			);
+		}
+		return $wrap.find(".mail-loader");
+	}
+
+	function setSending($form, $button, sending) {
+		var $loader = ensureMailLoader($form);
+		if (sending) {
+			$loader.addClass("is-visible").attr("aria-busy", "true");
+			$button.prop("disabled", true).addClass("is-sending").data("label", $button.text()).text("Sending...");
+			$form.find("input, textarea, button").prop("disabled", true);
+		} else {
+			$loader.removeClass("is-visible").attr("aria-busy", "false");
+			$form.find("input, textarea").prop("disabled", false);
+			$button.prop("disabled", false).removeClass("is-sending").text($button.data("label") || "Send Message");
+		}
+	}
+
 	$("form#contact-form").submit(function (event) {
 		event.preventDefault();
 		$("form#contact-form .error").remove();
@@ -24,6 +55,7 @@ $(document).ready(function () {
 		}
 
 		var $form = $(this);
+		var $button = $form.find("#submitButton");
 		var payload = {
 			name: $form.find('[name="name"]').val(),
 			email: $form.find('[name="email"]').val(),
@@ -31,16 +63,16 @@ $(document).ready(function () {
 			message: $form.find('[name="message"]').val()
 		};
 
-		$("#loader").show();
+		setSending($form, $button, true);
 		$.ajax({
 			url: "/api/contact",
 			type: "POST",
 			contentType: "application/json",
 			data: JSON.stringify(payload),
 			success: function () {
+				setSending($form, $button, false);
 				$form.slideUp("fast", function () {
 					$(this).before('<div class="success form-status">Thank you. Your email was sent successfully. We will contact you soon.</div>');
-					$("#loader").hide();
 				});
 			},
 			error: function (xhr) {
@@ -48,8 +80,8 @@ $(document).ready(function () {
 				if (xhr.responseJSON && xhr.responseJSON.message) {
 					message = xhr.responseJSON.message;
 				}
+				setSending($form, $button, false);
 				$form.before('<div class="error form-status">' + message + "</div>");
-				$("#loader").hide();
 			}
 		});
 		return false;
