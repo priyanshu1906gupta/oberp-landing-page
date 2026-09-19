@@ -273,7 +273,7 @@ transition: .3s all ease; }
 border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 .sticky-wrapper .site-navbar .site-menu-toggle {
 color: #fff; }
-.site-logo img{width:150px;}
+.site-logo img{width:auto;max-width:150px;max-height:56px;object-fit:contain;}
 .sticky-wrapper .site-navbar .site-logo a {
 color: #fff; }
 .sticky-wrapper .site-navbar .site-menu > li > a {

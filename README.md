@@ -1,26 +1,23 @@
-# Monoline – Free Design Agency HTML Template
-#### Preview
+# OBERP — Online Business ERP
 
- - [Demo](https://themewagon.github.io/monoline/)
+Landing site for **OBERP** (Online Business ERP): website making, Android and iOS apps, desktop software, and custom ERP solutions.
 
-#### Download
- - [Download from ThemeWagon](https://themewagon.com/themes/monoline/)
+## Local run
 
-## Getting Started
+1. Copy `.env.example` to `.env` and add the GoDaddy SMTP password.
+2. Install and start:
 
-1. Clone Repository
 ```
-git clone https://github.com/themewagon/monoline.git
-```
-
-## Author 
-```
-Design and code is completely written by Bestwpware and development team. 
+npm install
+npm start
 ```
 
-## License
+3. Open `http://localhost:3000`.
 
- - Design and Code is Copyright &copy; <a href="https://bestwpware.com/" target="_blank">Bestwpware</a>
- - Licensed cover under [MIT]
- - Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-# oberp-landing-page
+The contact form posts to `POST /api/contact` and sends mail to `admin@online-business-erp.com`. Do not commit `.env`.
+
+## Deploy
+
+Host on a Node.js server (VPS, Railway, Render, or similar). Shared PHP-only hosting will not run the contact API.
+
+After go-live, submit `https://online-business-erp.com/sitemap.xml` in Google Search Console.
