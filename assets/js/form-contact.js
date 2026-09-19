@@ -2,6 +2,7 @@ $(document).ready(function () {
 	$("form#contact-form").submit(function (event) {
 		event.preventDefault();
 		$("form#contact-form .error").remove();
+		$(".contact .success, .contact .form-status").remove();
 		var hasError = false;
 		$(".requiredField").each(function () {
 			if (jQuery.trim($(this).val()) === "") {
@@ -38,7 +39,7 @@ $(document).ready(function () {
 			data: JSON.stringify(payload),
 			success: function () {
 				$form.slideUp("fast", function () {
-					$(this).before('<div class="success">Thank you. Your email was sent successfully. We will contact you soon.</div>');
+					$(this).before('<div class="success form-status">Thank you. Your email was sent successfully. We will contact you soon.</div>');
 					$("#loader").hide();
 				});
 			},
@@ -47,7 +48,7 @@ $(document).ready(function () {
 				if (xhr.responseJSON && xhr.responseJSON.message) {
 					message = xhr.responseJSON.message;
 				}
-				$form.before('<div class="error">' + message + "</div>");
+				$form.before('<div class="error form-status">' + message + "</div>");
 				$("#loader").hide();
 			}
 		});

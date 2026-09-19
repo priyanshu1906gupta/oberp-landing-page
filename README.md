@@ -14,7 +14,7 @@ npm start
 
 3. Open `http://localhost:3000`.
 
-The contact form posts to `POST /api/contact` and sends mail to `admin@online-business-erp.com`. Do not commit `.env`.
+The contact form posts to `POST /api/contact` and sends mail the same way as Fitness Freaks: GoDaddy Workspace SMTP with fallbacks (465, 587, 80, 3535, 25, then `relay-hosting.secureserver.net`). Do not commit `.env`.
 
 ## Deploy
 
